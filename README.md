@@ -47,7 +47,6 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#api-endpoints">API Endpoints</a></li>
     <li><a href="#project-structure">Project Structure</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -227,22 +226,6 @@ pybo/
 ├── main.py                # FastAPI 애플리케이션 진입점
 └── requirements.txt       # Python 의존성
 ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] Notion 페이지와 하위 페이지 동기화
-- [x] 벡터 및 BM25 하이브리드 검색
-- [x] CrossEncoder reranking
-- [x] Ollama 기반 로컬 RAG 답변
-- [x] Notion 출처와 페이지 경로 표시
-- [x] 반응형 지식베이스 프론트엔드
-- [ ] 자동화된 테스트 스위트
-- [ ] 비동기 색인 작업과 진행률 표시
-- [ ] Docker 기반 원클릭 실행
-- [ ] 대화 기록과 후속 질문
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
