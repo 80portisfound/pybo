@@ -1,0 +1,36 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Local databases and vector indexes
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+chroma_db/
+
+# Model and notebook caches
+.cache/
+.huggingface/
+.ipynb_checkpoints/
+
+# Editors and OS files
+.DS_Store
+.idea/
+.vscode/
+*.swp

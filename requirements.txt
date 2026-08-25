@@ -1,0 +1,10 @@
+fastapi[standard]>=0.116,<1.0
+SQLAlchemy>=2.0,<3.0
+python-dotenv>=1.0,<2.0
+httpx>=0.28,<1.0
+chromadb>=1.0,<2.0
+sentence-transformers>=5.0,<6.0
+rank-bm25>=0.2,<1.0
+ollama>=0.5,<1.0
+PyJWT>=2.0,<3.0
+pwdlib[argon2]>=0.2,<1.0

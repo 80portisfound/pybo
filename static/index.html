@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Notion 문서를 검색하고 근거가 포함된 답변을 받는 로컬 지식베이스"
+    />
+    <meta name="theme-color" content="#f5f4ef" />
+    <title>Knowledge Base</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="/" aria-label="Knowledge Base 홈">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 28 28" role="img">
+              <path d="M7.5 8.5h8a5 5 0 0 1 5 5v7h-8a5 5 0 0 1-5-5v-7Z" />
+              <path d="M7.5 8.5 20.5 20.5M15 8.5h5.5V14" />
+            </svg>
+          </span>
+          <span>Knowledge Base</span>
+        </a>
+
+        <div class="system-status" title="로컬 RAG 시스템">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>LOCAL RAG</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="hero-title">
+          <p class="eyebrow"><span></span> YOUR SECOND BRAIN</p>
+          <h1 id="hero-title">세컨 브레인</h1>
+          <p class="hero-description">
+            Notion에 기록한 문서를 바탕으로 답하고,<br class="mobile-break" />
+            근거가 된 페이지까지 함께 찾아드립니다.
+          </p>
+
+          <form id="question-form" class="question-form">
+            <label class="sr-only" for="question-input">지식베이스에 질문하기</label>
+            <div class="composer">
+              <div class="composer-input-row">
+                <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="11" cy="11" r="6.5"></circle>
+                  <path d="m16 16 4 4"></path>
+                </svg>
+                <textarea
+                  id="question-input"
+                  name="query"
+                  rows="1"
+                  maxlength="500"
+                  autocomplete="off"
+                  placeholder="지식베이스에 질문하세요"
+                  required
+                ></textarea>
+              </div>
+              <div class="composer-footer">
+                <span class="keyboard-hint">
+                  <kbd>Enter</kbd> 질문하기 · <kbd>Shift</kbd> + <kbd>Enter</kbd> 줄바꿈
+                </span>
+                <button id="ask-button" class="ask-button" type="submit">
+                  <span>Ask</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M4 10h12M11 5l5 5-5 5"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="suggestions" aria-label="추천 질문">
+            <span>이렇게 물어보세요</span>
+            <button type="button" data-question="TCP 혼잡 제어가 뭐야?">TCP 혼잡 제어</button>
+            <button type="button" data-question="데이터베이스 인덱스는 왜 사용해?">DB 인덱스</button>
+            <button type="button" data-question="HTTP와 HTTPS의 차이를 설명해줘">HTTP vs HTTPS</button>
+          </div>
+        </section>
+
+        <section id="result-panel" class="result-panel" aria-live="polite" hidden>
+          <div class="result-heading">
+            <div>
+              <p class="section-label">KNOWLEDGE RESPONSE</p>
+              <h2 id="result-question"></h2>
+            </div>
+            <div id="result-meta" class="result-meta"></div>
+          </div>
+
+          <article class="answer-card">
+            <div class="card-title-row">
+              <span class="card-icon answer-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M9 18h6M10 22h4"></path>
+                  <path d="M8.3 15.2A7 7 0 1 1 15.7 15.2c-.7.5-.9 1.1-.9 1.8H9.2c0-.7-.2-1.3-.9-1.8Z"></path>
+                </svg>
+              </span>
+              <div>
+                <span class="card-kicker">ANSWER</span>
+                <h3>지식베이스의 답변</h3>
+              </div>
+              <button id="copy-button" class="copy-button" type="button" hidden>
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                  <rect x="6" y="6" width="10" height="10" rx="2"></rect>
+                  <path d="M14 6V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1"></path>
+                </svg>
+                <span>복사</span>
+              </button>
+            </div>
+
+            <div id="answer-content" class="answer-content"></div>
+            <div id="answer-loading" class="answer-loading" hidden aria-label="답변 생성 중">
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </article>
+
+          <section class="sources-section" aria-labelledby="sources-title">
+            <div class="sources-heading">
+              <div>
+                <p class="section-label">REFERENCES</p>
+                <h3 id="sources-title">근거가 된 문서</h3>
+              </div>
+              <span id="source-count" class="source-count">0 sources</span>
+            </div>
+            <div id="sources-list" class="sources-list"></div>
+          </section>
+        </section>
+
+        <section id="empty-state" class="empty-state" aria-label="검색 과정 안내">
+          <div class="flow-item">
+            <span class="flow-number">01</span>
+            <strong>Search</strong>
+            <p>Notion의 문서를 의미와 키워드로 함께 검색합니다.</p>
+          </div>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-item">
+            <span class="flow-number">02</span>
+            <strong>Rerank</strong>
+            <p>질문에 가장 가까운 근거를 다시 정렬합니다.</p>
+          </div>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-item">
+            <span class="flow-number">03</span>
+            <strong>Answer</strong>
+            <p>로컬 AI가 선택된 자료만 바탕으로 답변합니다.</p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Built on your own knowledge.</span>
+        <a href="/docs">API Docs</a>
+      </footer>
+    </div>
+  </body>
+</html>
