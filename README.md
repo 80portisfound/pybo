@@ -25,6 +25,11 @@
   </p>
 </div>
 
+<!-- PROJECT SCREENSHOT -->
+<p align="center">
+  <img src="docs/images/knowledge-base.jpg" alt="Second Brain Knowledge Base 화면" width="100%" />
+</p>
+
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
