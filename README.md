@@ -22,6 +22,8 @@
     <a href="http://127.0.0.1:8000"><strong>Open Local App »</strong></a>
     &middot;
     <a href="http://127.0.0.1:8000/docs">API Docs</a>
+    &middot;
+    <a href="https://80portisfound.github.io/blog/notion-local-rag-knowledge-base/">Blog Post</a>
   </p>
 </div>
 
