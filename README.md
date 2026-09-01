@@ -19,10 +19,6 @@
     Notion의 지식을 검색하고, 근거가 포함된 답변을 생성하는 로컬 RAG 지식베이스
     <br />
     <br />
-    <a href="http://127.0.0.1:8000"><strong>Open Local App »</strong></a>
-    &middot;
-    <a href="http://127.0.0.1:8000/docs">API Docs</a>
-    &middot;
     <a href="https://80portisfound.github.io/blog/notion-local-rag-knowledge-base/">Blog Post</a>
   </p>
 </div>
